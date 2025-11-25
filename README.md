@@ -6,7 +6,7 @@ A [WakaTime](https://wakatime.com/) extension for [Zed](https://zed.dev/).
 Uses the [wakatime-ls](https://github.com/wakatime/zed-wakatime/tree/master/wakatime-ls) to receive edit events from Zed and send heartbeats to WakaTime by [wakatime-cli](https://github.com/wakatime/wakatime-cli).
 
 ## Install
-Search "wakatime" in extension page, and install it.
+Search for "wakatime" in the "Extensions" page and click "Install".
 ![type install](./images/install.png)
 
 ## Configuration
@@ -14,20 +14,20 @@ In order to authenticate with the wakatime-cli, the language server needs to kno
 Here are two ways to set the lsp.
 
 ### WakaTime configuration file
-create a file named `.wakatime.cfg`, locate your HOME directory.
+Create a file named `.wakatime.cfg` in your $HOME directory.
 ```toml
 [settings]
-api_key = Your api key
+api_key = your-api-key
 ```
 Go through up [wakatime-cli](https://github.com/wakatime/wakatime-cli/blob/develop/USAGE.md)'s documentation for more options.
 
-### zed setting file
-Zed setting.Open zed setting file, add your api key
+### Zed settings file
+Open Zed's settings file, then add your api key.
 ```json
 "lsp": {
   "wakatime": {
     "initialization_options": {
-      "api-key": "You api key"
+      "api-key": "Your api key"
     }
   }
 }
