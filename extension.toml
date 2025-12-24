@@ -145,6 +145,7 @@ languages = [
     "OMNeT++ MSG",
     "OMNeT++ NED",
     "OpenSCAD",
+    "OpenTofu",
     "Org",
     "Pact",
     "Path of Exile Filter",
