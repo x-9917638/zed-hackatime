@@ -35,6 +35,7 @@ struct WakatimeLanguageServer {
     wakatime_path: String,
     current_file: Mutex<CurrentFile>,
     platform: ArcSwap<String>,
+    strict_tracking: bool,
 }
 
 // Extract filepath string from 'file://' URI.
@@ -50,6 +51,11 @@ fn extract_uri_string(uri: &url::Url) -> String {
 
 impl WakatimeLanguageServer {
     async fn send(&self, event: Event) {
+        // if we have enhanced tracking enabled, only send heartbeats that have lineno and cursor_pos
+        if self.strict_tracking && (event.lineno.is_none() || event.cursor_pos.is_none()) {
+            return;
+        }
+
         // if is_write is false, and file has not changed since last heartbeat,
         // and less than 2 minutes since last heartbeat, and do nothing
         const INTERVAL: TimeDelta = TimeDelta::minutes(2);
@@ -113,7 +119,7 @@ impl WakatimeLanguageServer {
         self.client
             .log_message(
                 MessageType::LOG,
-                format!("Wakatime  command: {:?}", command.as_std()),
+                format!("Wakatime command: {:?}", command.as_std()),
             )
             .await;
 
@@ -194,6 +200,14 @@ impl LanguageServer for WakatimeLanguageServer {
         self.client
             .log_message(MessageType::INFO, "Wakatime language server initialized")
             .await;
+        if self.strict_tracking {
+            self.client
+                .log_message(
+                    MessageType::INFO,
+                    "Running in strict mode; only tracking events with line and cursor position will be sent.",
+                )
+                .await;
+        }
     }
 
     async fn shutdown(&self) -> Result<()> {
@@ -258,6 +272,14 @@ async fn main() {
                 .help("wakatime-cli path")
                 .required(true),
         )
+        // arg for enhanced tracking
+        .arg(
+            Arg::new("strict-tracking")
+                .short('e')
+                .long("strict-tracking")
+                .help("Enable enhanced tracking")
+                .action(clap::ArgAction::SetTrue),
+        )
         .get_matches();
 
     let wakatime_cli = if let Some(s) = matches.get_one::<String>("wakatime-cli") {
@@ -265,6 +287,8 @@ async fn main() {
     } else {
         "wakatime-cli".to_string()
     };
+
+    let strict_tracking = *matches.get_one::<bool>("strict-tracking").unwrap_or(&false);
 
     let stdin = tokio::io::stdin();
     let stdout = tokio::io::stdout();
@@ -279,6 +303,7 @@ async fn main() {
                 uri: String::new(),
                 timestamp: Local::now(),
             }),
+            strict_tracking,
         })
     });
     Server::new(stdin, stdout, socket).serve(service).await;
