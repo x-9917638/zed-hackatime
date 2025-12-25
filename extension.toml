@@ -1,10 +1,10 @@
-id = "wakatime"
-name = "wakatime"
-description = "Wakatime support."
+id = "hackatime"
+name = "hackatime"
+description = "Wakatime extension fork to improve hackatime support."
 version = "0.1.10"
 schema_version = 1
-authors = ["Alan Hamlett <alan@wakatime.com>", "bestgopher <84328409@qq.com>"]
-repository = "https://github.com/wakatime/zed-wakatime"
+authors = ["Alan Hamlett <alan@wakatime.com>", "bestgopher <84328409@qq.com>", "alice <alice@hackclub.cc"]
+repository = "https://github.com/espcaa/zed-hackatime"
 
 [language_servers.wakatime]
 name = "wakatime"

@@ -272,14 +272,6 @@ async fn main() {
                 .help("wakatime-cli path")
                 .required(true),
         )
-        // arg for enhanced tracking
-        .arg(
-            Arg::new("strict-tracking")
-                .short('e')
-                .long("strict-tracking")
-                .help("Enable enhanced tracking")
-                .action(clap::ArgAction::SetTrue),
-        )
         .get_matches();
 
     let wakatime_cli = if let Some(s) = matches.get_one::<String>("wakatime-cli") {
@@ -288,7 +280,7 @@ async fn main() {
         "wakatime-cli".to_string()
     };
 
-    let strict_tracking = *matches.get_one::<bool>("strict-tracking").unwrap_or(&false);
+    let strict_tracking = true;
 
     let stdin = tokio::io::stdin();
     let stdout = tokio::io::stdout();

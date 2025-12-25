@@ -169,7 +169,7 @@ impl WakatimeExtension {
         }
 
         let binary_path =
-            self.download(language_server_id, "wakatime-ls", "wakatime/zed-wakatime")?;
+            self.download(language_server_id, "wakatime-ls", "espcaa/zed-hackatime")?;
 
         self.cached_ls_binary_path = Some(binary_path.clone());
 
@@ -223,7 +223,7 @@ impl zed::Extension for WakatimeExtension {
 
         let ls_binary_path = self.language_server_binary_path(language_server_id, worktree)?;
 
-        let mut args = vec!["--wakatime-cli".to_string(), {
+        let args = vec!["--wakatime-cli".to_string(), {
             use std::env;
             let current = env::current_dir().unwrap();
             let waka_cli = if is_absolute_path_wasm(&wakatime_cli_binary_path) {
@@ -237,19 +237,6 @@ impl zed::Extension for WakatimeExtension {
             };
             sanitize_path(waka_cli.as_str())
         }];
-
-        let lsp_settings = zed::settings::LspSettings::for_worktree("wakatime", worktree)?;
-
-        // check if strict_tracking=true in the lsp settings
-        if let Some(settings) = &lsp_settings.settings {
-            if settings
-                .get("strict_tracking")
-                .and_then(|v| v.as_bool())
-                .unwrap_or(false)
-            {
-                args.push("--strict-tracking".to_string());
-            }
-        }
 
         Ok(Command {
             args,

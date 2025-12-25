@@ -1,9 +1,6 @@
-# zed-wakatime
-[![Dynamic JSON Badge](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.zed.dev%2Fextensions%2Fwakatime&query=%24.data%5B0%5D.download_count&label=download&cacheSeconds=60)](https://zed.dev/extensions?query=wakatime)
+# zed-hackatime
 
-A [WakaTime](https://wakatime.com/) extension for [Zed](https://zed.dev/).
-
-Uses the [wakatime-ls](https://github.com/wakatime/zed-wakatime/tree/master/wakatime-ls) to receive edit events from Zed and send heartbeats to WakaTime by [wakatime-cli](https://github.com/wakatime/wakatime-cli).
+this is a fork of [zed-wakatime](https://github.com/wakatime/zed-wakatime) that should work better with [hackatime](https://hackatime.hackclub.com/)!
 
 ## Install
 Search for "wakatime" in the "Extensions" page and click "Install".
