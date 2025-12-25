@@ -4,7 +4,6 @@ this is a fork of [zed-wakatime](https://github.com/wakatime/zed-wakatime) that 
 
 ## Install
 Search for "wakatime" in the "Extensions" page and click "Install".
-![type install](./images/install.png)
 
 ## Configuration
 In order to authenticate with the wakatime-cli, the language server needs to know your API token.
