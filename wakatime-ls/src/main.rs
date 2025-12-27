@@ -103,8 +103,6 @@ impl WakatimeLanguageServer {
 
         if let Some(ref language) = event.language {
             command.arg("--language").arg(language);
-        } else {
-            command.arg("--guess-language");
         }
 
         if let Some(lineno) = event.lineno {
